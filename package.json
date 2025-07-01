@@ -1,6 +1,6 @@
 {
   "name": "@jackjakarta/prettier-config",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A shareable Prettier configuration with intelligent import sorting and customizable options",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -24,12 +24,12 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/titanom/prettier-config.git"
+    "url": "git+https://github.com/jackjakarta/prettier-config.git"
   },
   "bugs": {
-    "url": "https://github.com/titanom/prettier-config/issues"
+    "url": "https://github.com/jackjakarta/prettier-config/issues"
   },
-  "homepage": "https://github.com/titanom/prettier-config#readme",
+  "homepage": "https://github.com/jackjakarta/prettier-config#readme",
   "exports": {
     ".": {
       "require": "./dist/index.js",
