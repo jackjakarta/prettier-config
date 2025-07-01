@@ -1,6 +1,6 @@
 {
   "name": "@jackjakarta/prettier-config",
-  "version": "0.1.0",
+  "version": "0.1.7",
   "description": "A shareable Prettier configuration with intelligent import sorting and customizable options",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
