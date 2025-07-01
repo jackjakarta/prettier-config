@@ -1,0 +1,60 @@
+{
+  "name": "@jackjakarta/prettier-config",
+  "version": "0.1.0",
+  "description": "A shareable Prettier configuration with intelligent import sorting and customizable options",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "build": "tsup && fix-tsup-cjs",
+    "release": "pnpm build && changeset publish"
+  },
+  "keywords": [
+    "prettier",
+    "prettier-config",
+    "code-style",
+    "formatting",
+    "import-sorting",
+    "eslint",
+    "typescript",
+    "javascript"
+  ],
+  "author": "jackjakarta",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/titanom/prettier-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/titanom/prettier-config/issues"
+  },
+  "homepage": "https://github.com/titanom/prettier-config#readme",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "packageManager": "pnpm@10.11.0",
+  "peerDependencies": {
+    "prettier": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.0.10",
+    "fix-tsup-cjs": "1.2.0",
+    "prettier": "3.6.2",
+    "tsup": "8.5.0",
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.4.2"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
