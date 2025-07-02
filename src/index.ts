@@ -4,12 +4,14 @@ type Options = {
     scope?: string | string[];
     alias?: string[];
   };
+  tailwind?: boolean;
   extend: { plugins: string[] } & Record<string, unknown>;
 };
 
 export default function defineConfig(options: Partial<Options> = {}) {
   const {
     order: { scope = [], enabled: orderEnabled = true, alias = [] } = {},
+    tailwind = false,
     extend: { plugins = [], ...extend } = {},
   } = options;
 
@@ -57,7 +59,10 @@ export default function defineConfig(options: Partial<Options> = {}) {
     embeddedLanguageFormatting: 'off',
     ...getOrderOptions(),
     ...extend,
-
-    plugins: [...(orderEnabled ? ['@ianvs/prettier-plugin-sort-imports'] : []), ...plugins],
+    plugins: [
+      ...(orderEnabled ? ['@ianvs/prettier-plugin-sort-imports'] : []),
+      ...(tailwind ? ['prettier-plugin-tailwindcss'] : []),
+      ...plugins,
+    ],
   };
 }

@@ -1,6 +1,6 @@
 {
   "name": "@jackjakarta/prettier-config",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A shareable Prettier configuration with intelligent import sorting and customizable options",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -48,7 +48,8 @@
     "typescript": "5.8.3"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.4.2"
+    "@ianvs/prettier-plugin-sort-imports": "4.4.2",
+    "prettier-plugin-tailwindcss": "0.6.13"
   },
   "engines": {
     "node": ">=16",
