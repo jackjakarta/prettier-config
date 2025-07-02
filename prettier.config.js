@@ -6,7 +6,5 @@ export default defineConfig({
     scope: ['src'],
     alias: [],
   },
-  extend: {
-    // Keep the default settings for this project
-  },
+  extend: {},
 });

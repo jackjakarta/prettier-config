@@ -1,29 +1,36 @@
 # @jackjakarta/prettier-config
 
-A shareable Prettier configuration with intelligent import sorting and customizable options.
+A modern, type-safe Prettier configuration with intelligent import sorting and customizable options.
 
 ## Features
 
 - 🎯 **Sensible defaults** - Production-ready Prettier configuration
-- 📦 **Import sorting** - Automatic import organization with `@ianvs/prettier-plugin-sort-imports`
-- 🔧 **Configurable** - Customize import order, scopes, and aliases
+- 📦 **Smart import sorting** - Automatic import organization with `@ianvs/prettier-plugin-sort-imports`
+- 🔧 **Fully configurable** - Customize import order, scopes, and aliases with TypeScript support
 - 🚀 **Zero config** - Works out of the box with minimal setup
-- 📝 **TypeScript support** - Full type safety and IntelliSense
+- 📝 **TypeScript-first** - Full type safety and IntelliSense
+- 🎨 **Tailwind CSS support** - Built-in integration with `prettier-plugin-tailwindcss`
+- ⚡ **Modern ESM/CJS** - Dual package exports for maximum compatibility
+- 🏗️ **Presets included** - Ready-to-use configurations for React, Next.js, and more
 
 ## Installation
 
 ```bash
 # npm
-npm install -D @jackjakarta/prettier-config
+npm install -D @jackjakarta/prettier-config prettier
 
-# pnpm
-pnpm add -D @jackjakarta/prettier-config
+# pnpm (recommended)
+pnpm add -D @jackjakarta/prettier-config prettier
 
 # yarn
-yarn add -D @jackjakarta/prettier-config
+yarn add -D @jackjakarta/prettier-config prettier
 ```
 
+> **Note**: Prettier 3.0+ is required as a peer dependency.
+
 ## Quick Start
+
+### Basic Usage
 
 Create a `prettier.config.js` file in your project root:
 
@@ -33,9 +40,22 @@ import defineConfig from '@jackjakarta/prettier-config';
 export default defineConfig();
 ```
 
-## Configuration
+### Using Presets
 
-### Basic Usage
+```javascript
+import defineConfig, { presets } from '@jackjakarta/prettier-config';
+
+// For React projects
+export default defineConfig(presets.react());
+
+// For Next.js projects
+export default defineConfig(presets.nextjs());
+
+// Minimal setup
+export default defineConfig(presets.minimal());
+```
+
+### Custom Configuration
 
 ```javascript
 import defineConfig from '@jackjakarta/prettier-config';
@@ -43,12 +63,14 @@ import defineConfig from '@jackjakarta/prettier-config';
 export default defineConfig({
   order: {
     enabled: true,
-    scope: ['components', 'hooks', 'utils'],
-    alias: ['@', '~'],
+    scope: ['components', 'hooks', 'utils', 'lib'],
+    alias: ['@', '~', '#'],
   },
+  tailwind: true,
   extend: {
     printWidth: 120,
     semi: false,
+    plugins: ['prettier-plugin-organize-attributes'],
   },
 });
 ```
