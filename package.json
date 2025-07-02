@@ -1,6 +1,6 @@
 {
   "name": "@jackjakarta/prettier-config",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "description": "A modern, type-safe Prettier configuration with intelligent import sorting and customizable options",
   "main": "./dist/index.cjs",
