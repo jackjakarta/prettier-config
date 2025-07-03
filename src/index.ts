@@ -6,6 +6,7 @@ import { type Config } from 'prettier';
 export const SUPPORTED_PLUGINS = {
   SORT_IMPORTS: '@ianvs/prettier-plugin-sort-imports',
   TAILWINDCSS: 'prettier-plugin-tailwindcss',
+  PACKAGEJSON: 'prettier-plugin-packagejson',
 } as const;
 
 /**
@@ -28,6 +29,8 @@ export interface PrettierConfigOptions {
   order?: ImportOrderOptions;
   /** Enable Tailwind CSS plugin (default: false) */
   tailwind?: boolean;
+  /** Enable package.json formatting plugin (default: false) */
+  packageJson?: boolean;
   /** Extend or override any Prettier configuration option */
   extend?: Partial<Config> & {
     /** Additional plugins to include */
@@ -60,13 +63,14 @@ export interface PrettierConfigOptions {
  */
 export default function defineConfig(options: Partial<PrettierConfigOptions> = {}): Config {
   const {
-    order: { scope = [], enabled: orderEnabled = false, alias = [] } = {},
     tailwind = false,
+    packageJson = false,
+    order: { enabled: orderEnabled = false, scope = [], alias = [] } = {},
     extend: { plugins = [], ...extendConfig } = {},
   } = options;
 
   if (process.env.NODE_ENV !== 'production') {
-    const warnings = validatePlugins(orderEnabled, tailwind);
+    const warnings = validatePlugins(orderEnabled, tailwind, packageJson);
     warnings.forEach((warning) => console.warn(`[@jackjakarta/prettier-config]: ${warning}`));
   }
 
@@ -101,7 +105,11 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
    * Validates that required plugins are available
    * @internal
    */
-  function validatePlugins(orderEnabled: boolean, tailwind: boolean): string[] {
+  function validatePlugins(
+    orderEnabled: boolean,
+    tailwind: boolean,
+    packageJson: boolean,
+  ): string[] {
     const warnings: string[] = [];
 
     if (orderEnabled) {
@@ -120,6 +128,16 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
       } catch {
         warnings.push(
           `Tailwind CSS formatting is enabled but ${SUPPORTED_PLUGINS.TAILWINDCSS} is not installed. Run: npm install -D ${SUPPORTED_PLUGINS.TAILWINDCSS}`,
+        );
+      }
+    }
+
+    if (packageJson) {
+      try {
+        require.resolve(SUPPORTED_PLUGINS.PACKAGEJSON);
+      } catch {
+        warnings.push(
+          `Package.json formatting is enabled but ${SUPPORTED_PLUGINS.PACKAGEJSON} is not installed. Run: npm install -D ${SUPPORTED_PLUGINS.PACKAGEJSON}`,
         );
       }
     }
@@ -150,6 +168,7 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
     plugins: [
       ...(orderEnabled ? [SUPPORTED_PLUGINS.SORT_IMPORTS] : []),
       ...(tailwind ? [SUPPORTED_PLUGINS.TAILWINDCSS] : []),
+      ...(packageJson ? [SUPPORTED_PLUGINS.PACKAGEJSON] : []),
       ...plugins,
     ],
   } satisfies Config;
@@ -160,15 +179,35 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
  */
 export const presets = {
   /**
-   * Standard configuration for most TypeScript/JavaScript projects
+   * Configuration for Next.js projects
+   *
+   * Default values:
+   * - `tailwind`: true
+   * - `importSorting`: true
+   * - `packageJson`: false
    */
-  standard: (): Partial<PrettierConfigOptions> => ({}),
+  nextjs: ({
+    tailwind = true,
+    importSorting = true,
+    packageJson = false,
+  }: {
+    tailwind?: boolean;
+    importSorting?: boolean;
+    packageJson?: boolean;
+  } = {}): Partial<PrettierConfigOptions> => ({
+    tailwind,
+    packageJson,
+    order: {
+      enabled: importSorting,
+    },
+  }),
 
   /**
-   * Configuration for Next.js projects
+   * Full configuration with all features enabled
    */
-  nextjs: (): Partial<PrettierConfigOptions> => ({
+  full: (): Partial<PrettierConfigOptions> => ({
     tailwind: true,
+    packageJson: true,
     order: {
       enabled: true,
     },

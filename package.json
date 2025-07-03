@@ -1,19 +1,7 @@
 {
   "name": "@jackjakarta/prettier-config",
   "version": "0.2.2",
-  "type": "module",
   "description": "A modern, type-safe Prettier configuration with intelligent import sorting and customizable options",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "build": "tsup && fix-tsup-cjs",
-    "test": "pnpm test:types",
-    "test:types": "tsc --noEmit",
-    "lint": "prettier --check ."
-  },
   "keywords": [
     "prettier",
     "prettier-config",
@@ -24,16 +12,17 @@
     "typescript",
     "javascript"
   ],
-  "author": "jackjakarta",
-  "license": "ISC",
+  "homepage": "https://github.com/jackjakarta/prettier-config#readme",
+  "bugs": {
+    "url": "https://github.com/jackjakarta/prettier-config/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jackjakarta/prettier-config.git"
   },
-  "bugs": {
-    "url": "https://github.com/jackjakarta/prettier-config/issues"
-  },
-  "homepage": "https://github.com/jackjakarta/prettier-config#readme",
+  "license": "ISC",
+  "author": "jackjakarta",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -46,9 +35,21 @@
       "require": "./dist/index.cjs"
     }
   },
-  "packageManager": "pnpm@10.11.0",
-  "peerDependencies": {
-    "prettier": "^3.0.0"
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup && fix-tsup-cjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "prettier --check .",
+    "test": "pnpm test:types",
+    "test:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.4.2",
+    "prettier-plugin-packagejson": "2.5.17",
+    "prettier-plugin-tailwindcss": "0.6.13"
   },
   "devDependencies": {
     "@types/node": "24.0.10",
@@ -57,10 +58,10 @@
     "tsup": "8.5.0",
     "typescript": "5.8.3"
   },
-  "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.4.2",
-    "prettier-plugin-tailwindcss": "0.6.13"
+  "peerDependencies": {
+    "prettier": "^3.0.0"
   },
+  "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=18",
     "pnpm": ">=8"

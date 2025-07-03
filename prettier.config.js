@@ -4,7 +4,6 @@ export default defineConfig({
   order: {
     enabled: true,
     scope: ['src'],
-    alias: [],
   },
-  extend: {},
+  packageJson: true,
 });
