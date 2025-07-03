@@ -1,6 +1,6 @@
 {
   "name": "@jackjakarta/prettier-config",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "description": "A modern, type-safe Prettier configuration with intelligent import sorting and customizable options",
   "keywords": [
     "prettier",
@@ -39,7 +39,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup && fix-tsup-cjs",
+    "build": "rm -rf dist && tsup && fix-tsup-cjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "prettier --check .",
