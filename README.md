@@ -45,13 +45,13 @@ export default defineConfig();
 ```javascript
 import defineConfig, { presets } from '@jackjakarta/prettier-config';
 
-// For React projects
-export default defineConfig(presets.react());
-
 // For Next.js projects
 export default defineConfig(presets.nextjs());
 
-// Minimal setup
+// All features enabled
+export default defineConfig(presets.full());
+
+// Minimal setup with only import sorting
 export default defineConfig(presets.minimal());
 ```
 
