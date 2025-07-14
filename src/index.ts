@@ -69,11 +69,6 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
     extend: { plugins = [], ...extendConfig } = {},
   } = options;
 
-  if (process.env.NODE_ENV !== 'production') {
-    const warnings = validatePlugins(orderEnabled, tailwind, packageJson);
-    warnings.forEach((warning) => console.warn(`[@jackjakarta/prettier-config]: ${warning}`));
-  }
-
   function getOrderOptions(): Partial<Config> {
     if (!orderEnabled) return {};
 
@@ -99,50 +94,6 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
     ];
 
     return { importOrder };
-  }
-
-  /**
-   * Validates that required plugins are available
-   * @internal
-   */
-  function validatePlugins(
-    orderEnabled: boolean,
-    tailwind: boolean,
-    packageJson: boolean,
-  ): string[] {
-    const warnings: string[] = [];
-
-    if (orderEnabled) {
-      try {
-        require.resolve(SUPPORTED_PLUGINS.SORT_IMPORTS);
-      } catch {
-        warnings.push(
-          `Import sorting is enabled but ${SUPPORTED_PLUGINS.SORT_IMPORTS} is not installed. Run: npm install -D ${SUPPORTED_PLUGINS.SORT_IMPORTS}`,
-        );
-      }
-    }
-
-    if (tailwind) {
-      try {
-        require.resolve(SUPPORTED_PLUGINS.TAILWINDCSS);
-      } catch {
-        warnings.push(
-          `Tailwind CSS formatting is enabled but ${SUPPORTED_PLUGINS.TAILWINDCSS} is not installed. Run: npm install -D ${SUPPORTED_PLUGINS.TAILWINDCSS}`,
-        );
-      }
-    }
-
-    if (packageJson) {
-      try {
-        require.resolve(SUPPORTED_PLUGINS.PACKAGEJSON);
-      } catch {
-        warnings.push(
-          `Package.json formatting is enabled but ${SUPPORTED_PLUGINS.PACKAGEJSON} is not installed. Run: npm install -D ${SUPPORTED_PLUGINS.PACKAGEJSON}`,
-        );
-      }
-    }
-
-    return warnings;
   }
 
   return {
