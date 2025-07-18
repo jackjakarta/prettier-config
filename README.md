@@ -4,29 +4,32 @@ A modern, type-safe Prettier configuration with intelligent import sorting and c
 
 ## Features
 
-- 🎯 **Sensible defaults** - Production-ready Prettier configuration
 - 📦 **Smart import sorting** - Automatic import organization with `@ianvs/prettier-plugin-sort-imports`
 - 🔧 **Fully configurable** - Customize import order, scopes, and aliases with TypeScript support
 - 🚀 **Zero config** - Works out of the box with minimal setup
 - 📝 **TypeScript-first** - Full type safety and IntelliSense
 - 🎨 **Tailwind CSS support** - Built-in integration with `prettier-plugin-tailwindcss`
-- ⚡ **Modern ESM/CJS** - Dual package exports for maximum compatibility
-- 🏗️ **Presets included** - Ready-to-use configurations for React, Next.js, and more
+- 📋 **Package.json formatting** - Sorting and formatting of `package.json` with `prettier-plugin-packagejson`
+- 🏗️ **Presets included** - Ready-to-use configurations for Next.js, and more
 
 ## Installation
 
 ```bash
 # npm
-npm install -D @jackjakarta/prettier-config prettier
+npm install -D @jackjakarta/prettier-config
 
 # pnpm (recommended)
-pnpm add -D @jackjakarta/prettier-config prettier
+pnpm add -D @jackjakarta/prettier-config
 
 # yarn
-yarn add -D @jackjakarta/prettier-config prettier
+yarn add -D @jackjakarta/prettier-config
 ```
 
-> **Note**: Prettier 3.0+ is required as a peer dependency.
+_Newer versions of package managers like `pnpm@^10.0.0` will not automatically install dependencies or peer dependencies so you have manually install the plugins as well as `prettier@^3.0.0`._
+
+```bash
+pnpm add -D prettier @ianvs/prettier-plugin-sort-imports prettier-plugin-tailwindcss prettier-plugin-packagejson
+```
 
 ## Quick Start
 
@@ -37,6 +40,7 @@ Create a `prettier.config.js` file in your project root:
 ```javascript
 import defineConfig from '@jackjakarta/prettier-config';
 
+// This is the default config with no plugins enabled
 export default defineConfig();
 ```
 
@@ -45,10 +49,14 @@ export default defineConfig();
 ```javascript
 import defineConfig, { presets } from '@jackjakarta/prettier-config';
 
-// For Next.js projects
-export default defineConfig(presets.nextjs());
+// Customizable preset for next.js projects
+export default defineConfig(presets.nextjs({
+  tailwind: true,
+  importSorting: true,
+  packageJson: false,
+}));
 
-// All features enabled
+// All plugins enabled
 export default defineConfig(presets.full());
 
 // Minimal setup with only import sorting
@@ -70,7 +78,7 @@ export default defineConfig({
   extend: {
     printWidth: 120,
     semi: false,
-    plugins: ['prettier-plugin-organize-attributes'],
+    plugins: ['prettier-plugin-organize-attributes'], // Add additional plugins
   },
 });
 ```
@@ -87,16 +95,7 @@ Configure import sorting behavior:
 
 #### `extend`
 
-Extend or override any Prettier configuration option:
-
-```javascript
-extend: {
-  printWidth: 120,
-  semi: false,
-  singleQuote: false,
-  plugins: ['prettier-plugin-tailwindcss'], // Add additional plugins
-}
-```
+Extend or override any Prettier configuration option.
 
 ## Default Configuration
 
@@ -132,31 +131,6 @@ When import sorting is enabled, imports are organized in the following order:
 4. Internal scopes (configured via `scope` option)
 5. Relative imports
 6. CSS imports (always last)
-
-### Example
-
-```javascript
-// Before
-import './styles.css';
-import { useState } from 'react';
-import { Button } from '@/components/Button';
-import { utils } from '@utils/helpers';
-import lodash from 'lodash';
-import { config } from '../config';
-
-// After
-import { useState } from 'react';
-
-import lodash from 'lodash';
-
-import { Button } from '@/components/Button';
-
-import { utils } from '@utils/helpers';
-
-import { config } from '../config';
-
-import './styles.css';
-```
 
 ## Usage Examples
 
@@ -196,19 +170,6 @@ export default defineConfig({
 });
 ```
 
-### Disable Import Sorting
-
-```javascript
-// prettier.config.js
-import defineConfig from '@jackjakarta/prettier-config';
-
-export default defineConfig({
-  order: {
-    enabled: false,
-  },
-});
-```
-
 ## Package.json Scripts
 
 Add these scripts to your `package.json`:
@@ -218,7 +179,6 @@ Add these scripts to your `package.json`:
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint . && prettier --check ."
   }
 }
 ```
@@ -254,8 +214,4 @@ ISC
 
 ## Contributing
 
-Issues and pull requests are welcome! Please check the [issues page](https://github.com/titanom/prettier-config/issues) before creating a new one.
-
-## Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for release history.
+Issues and pull requests are welcome!
