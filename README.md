@@ -56,7 +56,7 @@ export default defineConfig(presets.nextjs({
   packageJson: false,
 }));
 
-// All plugins enabled
+// All plugins enabled (no custom configuration)
 export default defineConfig(presets.full());
 
 // Minimal setup with only import sorting
@@ -75,6 +75,7 @@ export default defineConfig({
     alias: ['@', '~', '#'],
   },
   tailwind: true,
+  packageJson: true,
   extend: {
     printWidth: 120,
     semi: false,
@@ -146,8 +147,9 @@ export default defineConfig({
     scope: ['components', 'hooks', 'utils', 'types'],
     alias: ['@', '~'],
   },
+  tailwind: true,
   extend: {
-    plugins: ['prettier-plugin-tailwindcss'],
+    plugins: ['prettier-plugin-organize-attributes']
   },
 });
 ```
