@@ -139,18 +139,16 @@ export const presets = {
    */
   nextjs: ({
     tailwind = true,
-    importSorting = true,
+    order = { enabled: true, scope: [], alias: [] },
     packageJson = false,
   }: {
     tailwind?: boolean;
-    importSorting?: boolean;
+    order?: ImportOrderOptions;
     packageJson?: boolean;
   } = {}): Partial<PrettierConfigOptions> => ({
     tailwind,
     packageJson,
-    order: {
-      enabled: importSorting,
-    },
+    order,
   }),
 
   /**
