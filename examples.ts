@@ -2,7 +2,7 @@
 
 import defineConfig, { presets } from '@jackjakarta/prettier-config';
 
-// 1. Basic usage with zero configuration
+// 1. Basic usage with zero configuration (no plugins)
 export const basicConfig = defineConfig();
 
 // 2. Using presets for common setups
@@ -17,6 +17,7 @@ export const customConfig = defineConfig({
     alias: ['@', '~', '#'],
   },
   tailwind: true,
+  packageJson: true,
   extend: {
     printWidth: 120,
     semi: false,
