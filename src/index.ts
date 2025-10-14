@@ -170,4 +170,22 @@ export const presets = {
       enabled: true,
     },
   }),
+
+  /**
+   * Configuration for typical node.js projects
+   *
+   * Default values:
+   * - `importSorting`: true
+   * - `packageJson`: false
+   */
+  nodejs: ({
+    order = { enabled: true, scope: [], alias: [] },
+    packageJson = false,
+  }: {
+    order?: ImportOrderOptions;
+    packageJson?: boolean;
+  } = {}): Partial<PrettierConfigOptions> => ({
+    packageJson,
+    order,
+  }),
 } as const;
