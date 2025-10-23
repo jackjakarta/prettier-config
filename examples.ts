@@ -7,7 +7,7 @@ export const basicConfig = defineConfig();
 
 // 2. Using presets for common setups
 export const nextjsConfig = defineConfig(presets.nextjs());
-export const minimalConfig = defineConfig(presets.minimal());
+export const minimalConfig = defineConfig(presets.nodejs());
 
 // 3. Custom configuration with all options
 export const customConfig = defineConfig({

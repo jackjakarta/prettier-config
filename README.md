@@ -25,7 +25,7 @@ pnpm add -D @jackjakarta/prettier-config
 yarn add -D @jackjakarta/prettier-config
 ```
 
-_Newer versions of package managers like `pnpm@^10.0.0` will not automatically install dependencies or peer dependencies so you have manually install the plugins as well as `prettier@^3.0.0`._
+_Newer versions of `PNPM` starting `pnpm@^10.0.0` will not automatically install dependencies or peer dependencies so you have manually install the plugins as well as `prettier@^3.0.0`._
 
 ```bash
 pnpm add -D prettier @ianvs/prettier-plugin-sort-imports prettier-plugin-tailwindcss prettier-plugin-packagejson
@@ -40,7 +40,7 @@ Create a `prettier.config.js` file in your project root:
 ```javascript
 import defineConfig from '@jackjakarta/prettier-config';
 
-// This is the default config with no plugins enabled
+// Default config with no plugins enabled
 export default defineConfig();
 ```
 
@@ -49,18 +49,26 @@ export default defineConfig();
 ```javascript
 import defineConfig, { presets } from '@jackjakarta/prettier-config';
 
-// Customizable preset for next.js projects
+// No options (default values)
+export default defineConfig(presets.nextjs())  // Next.js with Tailwind
+export default defineConfig(presets.nodejs())  // Typical node project (No Tailwind)
+
+// Customizable
 export default defineConfig(presets.nextjs({
-  tailwind: true,
-  importSorting: true,
-  packageJson: false,
+  order: {
+    enabled: true,
+    alias: ['@', '~', '#'],
+  },
+  tailwind: false,
 }));
 
-// All plugins enabled (no custom configuration)
-export default defineConfig(presets.full());
+export default defineConfig(presets.nodejs({
+  packageJson: true,
+  extend: {
+    printWidth: 140,
+  }
+}));
 
-// Minimal setup with only import sorting
-export default defineConfig(presets.minimal());
 ```
 
 ### Custom Configuration
@@ -97,6 +105,14 @@ Configure import sorting behavior:
 #### `extend`
 
 Extend or override any Prettier configuration option.
+
+#### `tailwind`
+
+(boolean, default: `false`) - Enable Tailwind CSS class sorting
+
+#### `packageJson`
+
+(boolean, default: `false`) - Enable package.json formatting
 
 ## Default Configuration
 
@@ -135,7 +151,7 @@ When import sorting is enabled, imports are organized in the following order:
 
 ## Usage Examples
 
-### React Project with TypeScript
+### React Project with Tailwind
 
 ```javascript
 // prettier.config.js
@@ -172,6 +188,8 @@ export default defineConfig({
 });
 ```
 
+You can see more examples [here](examples.ts).
+
 ## Package.json Scripts
 
 Add these scripts to your `package.json`:
@@ -194,7 +212,7 @@ Install the [Prettier extension](https://marketplace.visualstudio.com/items?item
 ```json
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true  // optional
 }
 ```
 
@@ -209,10 +227,6 @@ This package requires Prettier 3.0.0 or higher:
   }
 }
 ```
-
-## License
-
-ISC
 
 ## Contributing
 

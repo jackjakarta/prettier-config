@@ -114,6 +114,7 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
     htmlWhitespaceSensitivity: 'strict',
     endOfLine: 'lf',
     embeddedLanguageFormatting: 'off',
+    ...(tailwind ? { tailwindFunctions: ['clsx', 'cn', 'cva'] } : {}),
     ...getOrderOptions(),
     ...extendConfig,
     plugins: [
@@ -130,62 +131,50 @@ export default function defineConfig(options: Partial<PrettierConfigOptions> = {
  */
 export const presets = {
   /**
-   * Configuration for Next.js projects
+   * Configuration for Next.js projects using Tailwind CSS
    *
    * Default values:
    * - `tailwind`: true
-   * - `importSorting`: true
+   * - `order`: { enabled: true }
    * - `packageJson`: false
+   * - `extend`: {}
    */
   nextjs: ({
     tailwind = true,
-    order = { enabled: true, scope: [], alias: [] },
+    order = { enabled: true },
     packageJson = false,
+    extend = {},
   }: {
     tailwind?: boolean;
     order?: ImportOrderOptions;
     packageJson?: boolean;
+    extend?: Partial<Config> & { plugins?: string[] };
   } = {}): Partial<PrettierConfigOptions> => ({
     tailwind,
     packageJson,
     order,
-  }),
-
-  /**
-   * Full configuration with all features enabled
-   */
-  full: (): Partial<PrettierConfigOptions> => ({
-    tailwind: true,
-    packageJson: true,
-    order: {
-      enabled: true,
-    },
-  }),
-
-  /**
-   * Minimal configuration with just import sorting
-   */
-  minimal: (): Partial<PrettierConfigOptions> => ({
-    order: {
-      enabled: true,
-    },
+    extend,
   }),
 
   /**
    * Configuration for typical node.js projects
    *
    * Default values:
-   * - `importSorting`: true
+   * - `order`: { enabled: true }
    * - `packageJson`: false
+   * - `extend`: {}
    */
   nodejs: ({
-    order = { enabled: true, scope: [], alias: [] },
+    order = { enabled: true },
     packageJson = false,
+    extend = {},
   }: {
     order?: ImportOrderOptions;
     packageJson?: boolean;
+    extend?: Partial<Config> & { plugins?: string[] };
   } = {}): Partial<PrettierConfigOptions> => ({
     packageJson,
     order,
+    extend,
   }),
 } as const;

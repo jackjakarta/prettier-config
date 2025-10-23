@@ -1,26 +1,13 @@
-## Developers
+## Publish
 
-To publish a new version to `npm`, first make sure you are logged in.
+- `package.json` is the source of truth and config (you don't need to bump the version here, it's handled in the CI)
+- `.npmignore` takes care of the file structure that gets published
 
-```sh
-pnpm login
-```
-
-Then you have to build the library.
-
-> Make sure you bump the version in `package.json` first.
+To publish, you tag and push a new version in this format `*.*.*` on the master branch.
 
 ```sh
-pnpm build
-```
-
-Then you just have to publish it.
-
-- `package.json` is the source of truth and config
-- `.npmignore` takes care of the file structure
-
-```sh
-pnpm publish
+git tag 0.4.2
+git push origin 0.4.2
 ```
 
 That's it!
